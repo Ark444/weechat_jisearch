@@ -6,7 +6,7 @@ import requests
 import weechat
 
 info = (
-        'jisearch',
+        'JiSearch',
         'ark',
         '0.1',
         'MIT',

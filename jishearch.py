@@ -37,6 +37,13 @@ def jisho_search(data, buffer, message):
     return weechat.WEECHAT_RC_OK
 
 if weechat.register(*info):
-    weechat.hook_command('jisearch', 'Calls Jisho\'s API to search for words/kanji', '', '', '', 'jisho_search', '')
+    weechat.hook_command(
+            'jisearch',
+            'Calls Jisho\'s API to search for english words, kanji or kana',
+            '[kanji | kana | english]',
+            '',
+            '',
+            'jisho_search',
+            '')
 
 

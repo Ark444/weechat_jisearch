@@ -26,11 +26,10 @@
 # SOFTWARE.
 
 import json
-import requests
 import weechat
 
 info = (
-        'JiSearch',
+        'jisearch',
         'ark',
         '0.1',
         'MIT',
@@ -38,8 +37,6 @@ info = (
         '',
         'utf-8'
         )
-
-url = 'http://beta.jisho.org/api/v1/search/words?keyword='
 
 def jisho_search(data, buffer, message):
     weechat.hook_process('url:http://beta.jisho.org/api/v1/search/words?keyword=' + message, 30 * 1000, 'jisearch_process_cb', '')

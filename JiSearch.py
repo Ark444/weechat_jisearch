@@ -42,18 +42,20 @@ info = (
 url = 'http://beta.jisho.org/api/v1/search/words?keyword='
 
 def jisho_search(data, buffer, message):
-    r = requests.get(url+message)
-    
+    weechat.hook_process('url:http://beta.jisho.org/api/v1/search/words?keyword=' + message, 30 * 1000, 'jisearch_process_cb', '')
+    return weechat.WEECHAT_RC_OK
+
+def jisearch_process_cb(data, command, rc, out, err):
     result = b'[JiSearch] '
     try:
-        data = json.loads(r.text)['data'][0]
+        page_data = json.loads(out)['data'][0]
 
         try:
-            result += b'kanji: %s | ' % data['japanese'][0]['word'].encode('utf-8')
+            result += b'kanji: %s | ' % page_data['japanese'][0]['word'].encode('utf-8')
         except KeyError:
             pass
-        result += b'reading: %s | ' % data['japanese'][0]['reading'].encode('utf-8')
-        result += b'meaning: %s' % data['senses'][0]['english_definitions'][0].encode('utf-8')
+        result += b'reading: %s | ' % page_data['japanese'][0]['reading'].encode('utf-8')
+        result += b'meaning: %s' % page_data['senses'][0]['english_definitions'][0].encode('utf-8')
 
     except:
         result += 'no results found.'
@@ -63,7 +65,13 @@ def jisho_search(data, buffer, message):
 if weechat.register(*info):
     weechat.hook_command(
             'jisearch',
-            'Calls Jisho\'s API to search for english words, kanji or kana',
+            'Calls Jisho\'s API to search for english words, kanji or kana\n\n'
+            'example:\n'
+            '\tInput:  /jisearch 私\n'
+            '\tOutput: [JiSearch] kanji: 私 | reading: わたし | meaning: I\n'
+            '\n'
+            '\tInput:  /jisearch test\n'
+            '\tOutput: [JiSearch] reading: テスト | meaning: test\n',
             '[kanji | kana | english]',
             '',
             '',

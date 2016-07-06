@@ -62,7 +62,8 @@ def jisearch_process_cb(data, command, rc, out, err):
 if weechat.register(*info):
     weechat.hook_command(
             'jisearch',
-            'Calls Jisho\'s API to search for english words, kanji or kana\n\n'
+            'Calls Jisho\'s API to search for english words, kanji or kana.\n'
+            'Output is printed on current buffer.\n\n'
             'example:\n'
             '\tInput:  /jisearch 私\n'
             '\tOutput: [JiSearch] kanji: 私 | reading: わたし | meaning: I\n'

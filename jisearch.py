@@ -39,7 +39,7 @@ info = (
         )
 
 def jisho_search(data, buffer, message):
-    weechat.hook_process('url:http://beta.jisho.org/api/v1/search/words?keyword=' + message, 30 * 1000, 'jisearch_process_cb', '')
+    weechat.hook_process('url:http://jisho.org/api/v1/search/words?keyword=' + message, 30 * 1000, 'jisearch_process_cb', '')
     return weechat.WEECHAT_RC_OK
 
 def jisearch_process_cb(data, command, rc, out, err):
